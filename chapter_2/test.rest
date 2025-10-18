@@ -1,0 +1,8 @@
+### Totest home endpoint
+GET http://localhost:3000/
+
+### to dashboard endpoint
+GET http://localhost:3000/dashboard
+
+### data endpoint
+GET http://localhost:3000/api/info
