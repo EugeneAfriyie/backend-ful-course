@@ -6,3 +6,18 @@ GET http://localhost:3000/dashboard
 
 ### data endpoint
 GET http://localhost:3000/api/info
+
+
+### data endpoint for adding a user 
+
+POST http://localhost:3000/api/data
+Content-Type: application/json
+
+{
+   "name" : "Afriyie"
+}
+
+### data endpoint for deleting a user
+DELETE  http://localhost:3000/api/data
+Content-Type: application/json
+

@@ -7,17 +7,17 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-let data = {
-    name: "Alice",
-    age: 25,
-    city: "Wonderland"
-}
+let data = ["Eugene "]
 
 
 // Create a route for the root URL ("/")
 
 app.get('/', (req,res) =>{
-   res.send("<h1>Home Page</h1> <img src='https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif'/> <input type='text' placeholder='Enter something'/>")
+   res.send(`<body>
+    <h1>Data:/h1>
+    <p>${JSON.stringify(data)}</p>
+    
+    </body>`)
 
 })
 
@@ -27,16 +27,44 @@ app.get("/dashboard", (req,res) =>{
 })
 
 
+// Middleware
+
+app.use(express.json())
+
+
 // API endpoint
 
 
-app.get('/api/info', (req,res) =>{
+app.get('/api/inf', (req,res) =>{
 
-    console.log('This one was for info');
+    const newdata = req.body
+
+    console.log(newdata);
+    data.push(newdata.name)
     res.send(data)
+    res.sendStatus(200)
 
 }
 )
+
+
+
+app.post('/api/data',(req,res)=>{
+    // someone wants create a user
+ const newdata = req.body
+    console.log(newdata)
+    data.push(newdata.name)
+    //    res.send(data)/
+    res.sendStatus(201);
+
+
+})
+
+app.delete('/api/data', (req,res) => {
+    data.pop();
+    console.log('we delect the last data in the data aeray')
+    res.sendStatus(201)
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
