@@ -49,11 +49,39 @@ import db from "../db.js"
  })
 
 
- router.post('login', (req,res) =>{
+ router.post('/login', (req,res) =>{
 
     // we get their emil and we look up the password associated with that email in the database
     // but we getback and see it"s encrypted , which means that we cannot compare it to the one user just used trying to login 
     //  so what we can do is again onw way encrypt the password the user just  entered 
+
+    const {username,password} = req.body
+    
+
+    try {
+        const getUser = db.prepare(`SELECT * FROM users WHERE username = ?`)
+        const user = getUser.get(username)
+
+        // if we cannt find a user asoociated with the username , return out from the function
+        if(!user){
+            return res.status(404).send ({message: "User Not found"})
+        }
+        
+        // if the passord does nt match ,return out of the function
+        const isvalidPassword = bcript.compareSync(password, user.password)
+
+        if(!isvalidPassword){
+            return res.status(401).send({message:"Invalid password"})
+        }
+
+        // then we hae a successful authentication
+        const token = jwt.sign({id:user.id}, process.env.JWT_SECRET, {expiresIn: '24h'} )
+        res.json({token})
+
+    } catch(err){
+        coonsole.log(err.message)
+        res.sendStatus(503)
+    }
 
  })
 
