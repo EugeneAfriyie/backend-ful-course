@@ -26,7 +26,7 @@ import db from "../db.js"
 
             const result = insertUser.run(username,hashpassword)
 
-            // No that we have a user i want to add a todo for them
+            // NoTE that we have a user i want to add a todo for them
 
             const defaultTodo = "hello :) Add your first todo"
             const insertTodo = db.prepare(`INSERT INTO todos(user_id, task) VALUES(?, ?)`)
