@@ -74,6 +74,8 @@ import db from "../db.js"
             return res.status(401).send({message:"Invalid password"})
         }
 
+        console.log(user)
+
         // then we hae a successful authentication
         const token = jwt.sign({id:user.id}, process.env.JWT_SECRET, {expiresIn: '24h'} )
         res.json({token})
